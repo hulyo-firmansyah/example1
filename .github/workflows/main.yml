@@ -23,7 +23,7 @@ jobs:
         run: yarn build
       #share artifact between workflow
       - name: Share artifact between workflows
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: nextjs-build
           path: .next
@@ -37,9 +37,13 @@ jobs:
 
       # Download previously shared build
       - name: Get artifact
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: nextjs-build
+          path: .next
+        
+        - name: Display structure of downloaded files
+          run: ls -R
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
