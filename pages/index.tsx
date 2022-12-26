@@ -1,16 +1,20 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const [data, setData] = useState<string>();
+
   useEffect(() => {
     fetch("/api/hello")
       .then((res) => res.json())
       .then((res) => {
         console.log(res, "res success");
+        setData(JSON.stringify(res));
       })
       .catch((err) => {
+        setData(JSON.stringify(err));
         console.error(err, "res failed");
       });
   }, []);
@@ -47,7 +51,10 @@ export default function Home() {
             </a>
           </div>
         </div>
-
+        <div className={styles.center}>
+          Server Running On: {process.env.NODE_ENV}
+        </div>
+        <div>Data: {data}</div>
         <div className={styles.center}>
           <Image
             className={styles.logo}
@@ -58,7 +65,6 @@ export default function Home() {
             priority
           />
         </div>
-
         <div className={styles.grid}>
           <a
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
