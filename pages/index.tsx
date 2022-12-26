@@ -1,8 +1,20 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  useEffect(() => {
+    fetch("/api/hello")
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res, "res success");
+      })
+      .catch((err) => {
+        console.error(err, "res failed");
+      });
+  }, []);
+
   return (
     <>
       <Head>
